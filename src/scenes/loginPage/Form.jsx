@@ -79,7 +79,7 @@ const Form = () => {
     const login = async (values,onSubmitProps) => {
         const { email, password } = values;
         const LoggedInResponse = await fetch(
-            "http://localhost:3001/auth/login",
+            "https://social-media/auth/login",
             {
                 method:"POST",
                 headers:{"Content-Type":"application/json"},
