@@ -8,7 +8,7 @@ const UserImage = ({ image, size="60px"}) => {
             style={{ objectFit: "cover", borderRadius: "50%"}}
             width={size}
             height={size}
-            src={`https://social-media/assets/${image}`} 
+            src={`https://social-media-backend-2-dzbo.onrender.com/assets/${image}`} 
             alt="User"
              />
     </Box>

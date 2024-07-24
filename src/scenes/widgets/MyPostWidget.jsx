@@ -38,7 +38,7 @@ const MyPostWidget = ({ picturePath }) => {
         }
 
         const response = await fetch(
-            `https://social-media/posts`,
+            `https://social-media-backend-2-dzbo.onrender.com/posts`,
             {
                 method : "POST",
                 headers : { "Authorization" : `Bearer ${token}`},

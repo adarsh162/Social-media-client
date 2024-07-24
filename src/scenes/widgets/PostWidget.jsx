@@ -32,7 +32,7 @@ const PostWidget = ({
 
     const patchLike = async () => {
         const response = await fetch(
-            `https://social-media/posts/${postId}/like`,{
+            `https://social-media-backend-2-dzbo.onrender.com/posts/${postId}/like`,{
                 method: "PATCH",
                 headers: {
                     Authorization: `Bearer ${token}`,
@@ -63,7 +63,7 @@ const PostWidget = ({
                     height="auto"
                     alt="post"
                     style={{ borderRadius: "0.75rem", marginTop: "0.75rem"}}
-                    src={`https://social-media/assets/${picturePath}`}/>
+                    src={`https://social-media-backend-2-dzbo.onrender.com/assets/${picturePath}`}/>
             )}
             <FlexBetween mt="0.25rem">
                 <FlexBetween gap="1rem">

@@ -10,7 +10,7 @@ const PostsWidget = ({ userId, isProfile = false}) => {
     const token = useSelector((state)=>state.token);
 
     const getPosts = async () => {
-        const response = await fetch("https://social-media/posts",{
+        const response = await fetch("https://social-media-backend-2-dzbo.onrender.com/posts",{
             method: "GET",
             headers: { Authorization : `Bearer ${token}`}
         });
@@ -18,7 +18,7 @@ const PostsWidget = ({ userId, isProfile = false}) => {
         dispatch(setPosts({ posts : data}));
     }
     const getUserPosts = async () => {
-        const response = await fetch(`https://social-media/posts/${userId}/posts`,{
+        const response = await fetch(`https://social-media-backend-2-dzbo.onrender.com/posts/${userId}/posts`,{
             method: "GET",
             headers: { Authorization : `Bearer ${token}`}
         });
