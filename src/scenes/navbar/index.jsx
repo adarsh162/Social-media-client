@@ -8,8 +8,11 @@ import {
   MenuItem,
   FormControl,
   useTheme,
-  useMediaQuery
+  useMediaQuery,
+  Badge,
+  Input
 } from '@mui/material';
+
 import {
   Search,
   Message,
@@ -26,11 +29,12 @@ import FlexBetween from 'components/FlexBetween';
 import { useNavigate } from 'react-router-dom';
 
 
-const Navbar = () => {
+const Navbar = ({setIsSearch, setSearch}) => {
   //for toggling in the mobile screens
   const [isMobileMenuToggled, setIsMobileMenuToggled] = useState(false);
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const [val, setVal] = useState("");
   const user = useSelector((state) => state.user);
   const isNoneMobileScreens = useMediaQuery("(min-width: 1000px)");
 
@@ -41,6 +45,14 @@ const Navbar = () => {
   const primaryLight = theme.palette.primary.light;
   const alt = theme.palette.background.alt;
 
+  const handleChange = (event) => {
+    setVal(event.target.value);
+  };
+  const handleSubmit = (event) => {
+    setSearch(val);
+    setIsSearch(true);
+  }
+
   const fullName = user ?`${user.firstName} ${user.lastName}`:'fake person';
   return <FlexBetween padding="1rem 6%" backgroundColor={alt}>
     <FlexBetween gap="1.75rem">
@@ -48,7 +60,11 @@ const Navbar = () => {
         fontWeight="bold"
         fontSize="clamp(1rem, 2rem, 2.5rem)"
         color="primary"
-        onClick={() => navigate("/home")}
+        onClick={() => {
+          navigate("/home");
+          if(setIsSearch)setIsSearch(false);
+          }
+        }
         sx={{
           "&:hover": {
             color: primaryLight,
@@ -59,11 +75,10 @@ const Navbar = () => {
       </Typography>
       {isNoneMobileScreens && (
         <FlexBetween backgroundColor={neutralLight} borderRadius="9px" gap="3rem" padding="0.1rem 1.5rem">
-          <InputBase placeholder='Search...'>
-            <IconButton>
+          <Input onChange={handleChange} aria-label="search" placeholder="Search..." />
+            <IconButton onClick={handleSubmit}>
               <Search />
             </IconButton>
-          </InputBase>
         </FlexBetween>
       )}
       </FlexBetween>
@@ -79,7 +94,13 @@ const Navbar = () => {
             )}
           </IconButton>
           <Message sx={{ fontSize: "25px" }} />
-          <Notifications sx={{ fontSize: "25px" }} />
+          <IconButton onClick={() => navigate("/notification")} sx={{ fontSize: "25px" }}>
+
+            <Badge badgeContent={user.friend_requests.length} color="error">
+            <Notifications sx={{ fontSize: "25px" }} />
+            </Badge>
+            
+          </IconButton>
           <Help sx={{ fontSize: "25px" }} />
           <FormControl variant="standard" value={fullName}>
             <Select
@@ -140,7 +161,11 @@ const Navbar = () => {
             )}
           </IconButton>
           <Message sx={{ fontSize: "25px" }} />
-          <Notifications sx={{ fontSize: "25px" }} />
+          <IconButton onClick={() => navigate("/notification")} sx={{ fontSize: "25px" }}>
+            <Badge badgeContent={4} color="primary">
+            <Notifications sx={{ fontSize: "25px" }} />
+            </Badge>
+          </IconButton>
           <Help sx={{ fontSize: "25px" }} />
           <FormControl variant="standard" value={fullName}>
             <Select

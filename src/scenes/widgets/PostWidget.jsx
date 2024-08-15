@@ -32,7 +32,7 @@ const PostWidget = ({
 
     const patchLike = async () => {
         const response = await fetch(
-            `http://localhost:3001/posts/${postId}/like`,{
+            `https://social-media-backend-2-dzbo.onrender.com/posts/${postId}/like`,{
                 method: "PATCH",
                 headers: {
                     Authorization: `Bearer ${token}`,
@@ -53,6 +53,7 @@ const PostWidget = ({
                 name={name}
                 subtitle={location}
                 userPicturePath={userPicturePath}
+                isPost={true}
             />
             <Typography color={main} sx={{ mt: "1rem"}}>
                 {description}
@@ -63,7 +64,7 @@ const PostWidget = ({
                     height="auto"
                     alt="post"
                     style={{ borderRadius: "0.75rem", marginTop: "0.75rem"}}
-                    src={`http://localhost:3001/assets/${picturePath}`}/>
+                    src={`https://social-media-backend-2-dzbo.onrender.com/assets/${picturePath}`}/>
             )}
             <FlexBetween mt="0.25rem">
                 <FlexBetween gap="1rem">
@@ -84,7 +85,7 @@ const PostWidget = ({
                         <IconButton onClick={() => {setIsComments(!isComments)}}>
                             <ChatBubbleOutlineOutlined />
                         </IconButton>
-                        <Typography>{comments.length}</Typography>
+                        <Typography>{comments?.length}</Typography>
                     </FlexBetween>
                 </FlexBetween>
                 <IconButton>

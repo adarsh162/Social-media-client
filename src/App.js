@@ -8,6 +8,7 @@ import { useMemo } from 'react';
 import { useSelector } from 'react-redux';
 import { CssBaseline, ThemeProvider, createTheme } from '@mui/material';
 import { themeSettings } from 'theme';
+import RequestPage from 'scenes/requestPage';
 function App() {
   //useSelector is used for accesing state stored in redux store
   const mode = useSelector((state) => state.mode);
@@ -28,6 +29,8 @@ function App() {
               element={isAuth ?<HomePage /> : <Navigate to="/"/>} />
             <Route path='/profile/:userId' 
               element={isAuth ? <ProfilePage /> : <Navigate to="/"/>} />
+            <Route path='/notification' 
+              element={isAuth ? <RequestPage/> : <Navigate to="/"/>} />
           </Routes>
           
         </ThemeProvider>

@@ -4,23 +4,71 @@ import {
     LocationOnOutlined,
     WorkOutlineOutlined
 } from "@mui/icons-material";
-import { Box, Typography, Divider, useTheme } from "@mui/material";
+import { PersonAddOutlined, PersonRemoveOutlined } from "@mui/icons-material";
+import { Box, Typography, Divider, useTheme, IconButton } from "@mui/material";
 import UserImage from "components/UserImage";
 import FlexBetween from "components/FlexBetween";
 import WidgetWrapper from "components/WidgetWrapper";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { setFriends } from "state";
 
 const UserWidget = ({userId, picturePath}) => {
+    const dispatch = useDispatch();
+    const loggedUser = useSelector((state) => state.user);
     const [user, setUser] = useState(null);
     const {palette} = useTheme();
     const navigate = useNavigate();
     const token = useSelector((state) => state.token);
-    const dark = palette.neutral.dark;
-    const medium = palette.neutral.medium;
+    const primaryLight = palette.primary.light;
+    const primaryDark = palette.primary.dark;
     const main = palette.neutral.main;
-    
+    const medium = palette.neutral.medium;
+    const dark = palette.neutral.dark;
+    const [isFriend, setIsFriend] = useState(null);
+    const isUser = loggedUser._id === userId;
+
+    const sendRequest = async () => {
+        const response = await fetch(
+            `http://localhost:3001/users/sendRequest/${loggedUser._id}/${userId}`,
+            {
+                method: "GET",
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                    "Content-Type": "application/json",
+                },
+            }
+        );
+    }
+    const getFriends = async () => {
+        const response = await fetch(
+            `http://localhost:3001/users/${loggedUser._id}/friends`,{
+                method: "GET",
+                headers: {Authorization: `Bearer ${token}`}
+            }
+        );
+        if(response.ok){
+            const data = await response.json();
+            setIsFriend(data.find((friend) => friend._id === userId));
+        }
+    }
+    const RemoveFriend = async () => {
+        const response = await fetch(
+            `http://localhost:3001/users/removeFriend/${loggedUser._id}/${userId}`,
+            {
+                method: "GET",
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                    "Content-Type": "application/json",
+                },
+            }
+        );
+        if(response.ok){
+            const data = await response.json();
+            dispatch(setFriends({ friends : data}));
+        }
+      }
     const getUser = async () => {
         const response = await fetch(
             `http://localhost:3001/users/${userId}`,
@@ -34,6 +82,7 @@ const UserWidget = ({userId, picturePath}) => {
     }
 
     useEffect(() => {
+        getFriends();
         getUser();
     },[]);
     //we can put loading component while doing this
@@ -77,6 +126,25 @@ const UserWidget = ({userId, picturePath}) => {
                     </Box>
                    
                  </FlexBetween>
+                 {isFriend ? (
+              <IconButton 
+              onClick={() => RemoveFriend()} 
+              sx={{ backgroundColor: primaryLight, p: "0.6rem", marginLeft: "6rem"}}
+              >
+              <PersonRemoveOutlined sx={{color: primaryDark}}/>
+          </IconButton>
+            ) : (
+                <>
+                {!isUser && (
+                    <IconButton 
+                    onClick={() => sendRequest()} 
+                    sx={{ backgroundColor: primaryLight, p: "0.6rem", marginLeft: "6rem"}}
+                >
+                    <PersonAddOutlined sx={{color: primaryDark}}/>
+                    </IconButton>
+                )}
+                </>
+            )}
                  <ManageAccountsOutlined/>
                 </FlexBetween>
                  <Divider/>

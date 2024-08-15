@@ -46,7 +46,7 @@ const MyPostWidget = ({ picturePath }) => {
             }
         );
         const posts = await response.json();
-        console.log(posts);
+        //console.log(posts);
         dispatch(setPosts({posts}));
         setImage(null);
         setPost("");
@@ -145,9 +145,13 @@ const MyPostWidget = ({ picturePath }) => {
                     disabled={!post} 
                     onClick={handlePost} 
                     sx={{
-                        color: palette.background.alt, 
+                        color: "#000000", 
                         backgroundColor: palette.primary.main,
-                        borderRadius: "3rem"
+                        borderRadius: "3rem",
+                        '&.Mui-disabled': {
+                        backgroundColor: palette.primary.main,  // Change this to any color you want when disabled
+                        color: "#292828"
+                        }   
                         }}>
                 POST
             </Button>
