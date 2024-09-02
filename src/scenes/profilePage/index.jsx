@@ -19,7 +19,7 @@ const ProfilePage = () => {
   const [isFriend, setIsFriend] = useState({});
   const getFriends = async () => {
     const response = await fetch(
-        `http://localhost:3001/users/${loggedUser._id}/friends`,{
+        `https://social-media-backend-2-dzbo.onrender.com/users/${loggedUser._id}/friends`,{
             method: "GET",
             headers: {Authorization: `Bearer ${token}`}
         }
@@ -31,7 +31,7 @@ const ProfilePage = () => {
 }
   const getUser = async () => {
     const response = await fetch(
-      `http://localhost:3001/users/${userId}`,
+      `https://social-media-backend-2-dzbo.onrender.com/users/${userId}`,
       {
         method: "GET",
         headers: { Authorization: `Bearer ${token}` }

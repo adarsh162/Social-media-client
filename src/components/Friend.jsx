@@ -5,6 +5,8 @@ import { setFriends } from "state";
 import FlexBetween from "./FlexBetween";
 import UserImage from "./UserImage";
 import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 
 const Friend = ({ friendId, name, subtitle, userPicturePath, isPost = false }) => {
@@ -13,7 +15,6 @@ const Friend = ({ friendId, name, subtitle, userPicturePath, isPost = false }) =
     const {_id} = useSelector((state)=>state.user);
     const token = useSelector((state)=>state.token);
     const friends = useSelector((state)=>state.user.friends);
-    console.log("is post",isPost);
     const { palette } = useTheme();
     const primaryLight = palette.primary.light;
     const primaryDark = palette.primary.dark;
@@ -23,7 +24,7 @@ const Friend = ({ friendId, name, subtitle, userPicturePath, isPost = false }) =
 
     const sendRequest = async () => {
         const response = await fetch(
-            `http://localhost:3001/users/sendRequest/${_id}/${friendId}`,
+            `https://social-media-backend-2-dzbo.onrender.com/users/sendRequest/${_id}/${friendId}`,
             {
                 method: "GET",
                 headers: {
@@ -32,10 +33,13 @@ const Friend = ({ friendId, name, subtitle, userPicturePath, isPost = false }) =
                 },
             }
         );
-    }
+        if(response.ok){
+            toast.success('Request sent successfully!', {icon: '👏',autoClose: 1000,hideProgressBar: true,sx: {width:'200px',borderRadius: '10px',background:"#green",color: '#ffffff',},});
+        }
+}
     const RemoveFriend = async () => {
         const response = await fetch(
-            `http://localhost:3001/users/removeFriend/${_id}/${friendId}`,
+            `https://social-media-backend-2-dzbo.onrender.com/users/removeFriend/${_id}/${friendId}`,
             {
                 method: "GET",
                 headers: {
@@ -47,6 +51,7 @@ const Friend = ({ friendId, name, subtitle, userPicturePath, isPost = false }) =
         if(response.ok){
             const data = await response.json();
             dispatch(setFriends({ friends : data}));
+            toast.success('Removed Friend successfully!', {icon: '👏',autoClose: 1000,hideProgressBar: true,sx: {width:'200px',borderRadius: '10px',background:"#red",color: '#ffffff',},});
         }
     }
 

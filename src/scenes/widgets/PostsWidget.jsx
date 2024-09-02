@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { setPosts } from "state";
 import PostWidget from "./PostWidget";
@@ -8,22 +8,25 @@ const PostsWidget = ({ userId, isProfile = false}) => {
     const dispatch = useDispatch();
     const posts = useSelector((state)=>state.posts);
     const token = useSelector((state)=>state.token); 
+    const [postData, setPostData] = useState([]);
 
     const getPosts = async () => {
-        const response = await fetch(`http://localhost:3001/posts/${userId}`,{
+        const response = await fetch(`https://social-media-backend-2-dzbo.onrender.com/posts/${userId}`,{
             method: "GET",
             headers: { Authorization : `Bearer ${token}`}
         });
         const data = await response.json();
         dispatch(setPosts({ posts : data}));
+        setPostData(data);
     }
     const getUserPosts = async () => {
-        const response = await fetch(`http://localhost:3001/posts/${userId}/posts`,{
+        const response = await fetch(`https://social-media-backend-2-dzbo.onrender.com/posts/${userId}/posts`,{
             method: "GET",
             headers: { Authorization : `Bearer ${token}`}
         });
         const data = await response.json();
         dispatch(setPosts({ posts : data}));
+        setPostData(data);
     }
     useEffect(() => {
         if(isProfile){
@@ -45,7 +48,8 @@ const PostsWidget = ({ userId, isProfile = false}) => {
             picturePath,
             userPicturePath,
             likes,
-            comments
+            comments,
+            createdAt
             })=>(
                 <PostWidget
                     key={_id}
@@ -58,6 +62,7 @@ const PostsWidget = ({ userId, isProfile = false}) => {
                     userPicturePath={userPicturePath}
                     likes={likes}
                     comments={comments} 
+                    createdAt={createdAt}
                 />
             )
         )}

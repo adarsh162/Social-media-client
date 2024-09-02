@@ -14,7 +14,7 @@ const SearchWidget = ({search}) => {
 
     const getResult = async () => {
         const response = await fetch(
-            `http://localhost:3001/users/${_id}/getSearchUsers`,{
+            `https://social-media-backend-2-dzbo.onrender.com/users/${_id}/getSearchUsers`,{
                 method: "GET",
                 headers: {Authorization: `Bearer ${token}`}
             }
@@ -37,7 +37,7 @@ const SearchWidget = ({search}) => {
             >
                 Search Results
             </Typography>
-            <Box display="flex" flexDirection="col" gap="1.5rem">
+            <Box display="flex" flexDirection="column" gap="1.5rem">
                 {data.map((friend)=>(
                     <Friend 
                         key={friend._id} 

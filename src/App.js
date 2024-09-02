@@ -9,6 +9,8 @@ import { useSelector } from 'react-redux';
 import { CssBaseline, ThemeProvider, createTheme } from '@mui/material';
 import { themeSettings } from 'theme';
 import RequestPage from 'scenes/requestPage';
+import { ToastContainer, toast } from "react-toastify";
+import { ChatWidget } from 'scenes/widgets/ChatWidget';
 function App() {
   //useSelector is used for accesing state stored in redux store
   const mode = useSelector((state) => state.mode);
@@ -23,18 +25,28 @@ function App() {
         <ThemeProvider theme={theme}>
           <CssBaseline />
           <Routes>
-            <Route path='/' 
-              element={ isAuth ? <Navigate to="/home"/> : <LoginPage />} />
-            <Route path='/home' 
-              element={isAuth ?<HomePage /> : <Navigate to="/"/>} />
-            <Route path='/profile/:userId' 
-              element={isAuth ? <ProfilePage /> : <Navigate to="/"/>} />
-            <Route path='/notification' 
-              element={isAuth ? <RequestPage/> : <Navigate to="/"/>} />
+            <Route path='/'
+              element={isAuth ? <Navigate to="/home" /> : <LoginPage />} />
+            <Route path='/home'
+              element={isAuth ? <HomePage /> : <Navigate to="/" />} />
+            <Route path='/profile/:userId'
+              element={isAuth ? <ProfilePage /> : <Navigate to="/" />} />
+            <Route path='/notification'
+              element={isAuth ? <RequestPage /> : <Navigate to="/" />} />
+            <Route path='/chat'
+              element={isAuth ? <ChatWidget/> : <Navigate to="/" />}/>
           </Routes>
-          
+
         </ThemeProvider>
       </BrowserRouter>
+      <ToastContainer
+        position="bottom-center"
+        autoClose={2000}
+        hideProgressBar={true}
+        closeButton={false}
+        theme="colored"
+        icon={false}
+      />
     </div>
   );
 }

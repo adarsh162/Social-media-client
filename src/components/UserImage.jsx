@@ -10,6 +10,7 @@ const UserImage = ({ image, size="60px"}) => {
             height={size}
             src={`https://social-media-backend-2-dzbo.onrender.com/assets/${image}`} 
             alt="User"
+            className="max-h-fill-available"
              />
     </Box>
 }

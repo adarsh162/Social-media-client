@@ -63,7 +63,7 @@ const Form = () => {
         formData.append("picturePath", values.picture.name);
 
         const savedUserResponse = await fetch(
-            "http://localhost:3001/auth/register",
+            "https://social-media-backend-2-dzbo.onrender.com/auth/register",
             {
                 method: "POST",
                 body: formData
@@ -79,7 +79,7 @@ const Form = () => {
     const login = async (values,onSubmitProps) => {
         const { email, password } = values;
         const LoggedInResponse = await fetch(
-            "http://localhost:3001/auth/login",
+            "https://social-media-backend-2-dzbo.onrender.com/auth/login",
             {
                 method:"POST",
                 headers:{"Content-Type":"application/json"},

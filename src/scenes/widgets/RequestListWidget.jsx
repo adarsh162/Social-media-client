@@ -14,7 +14,7 @@ const RequestListWidget = ({ userId}) => {
 
     const getFriends = async () => {
         const response = await fetch(
-            `http://localhost:3001/users/getUserRequests/${userId}`,{
+            `https://social-media-backend-2-dzbo.onrender.com/users/getUserRequests/${userId}`,{
                 method: "GET",
                 headers: {Authorization: `Bearer ${token}`}
             }
@@ -22,7 +22,6 @@ const RequestListWidget = ({ userId}) => {
         if(response.ok){
             const data = await response.json();
             dispatch(setRequests({ requests : data}));
-            console.log()
         }
     }
     useEffect(()=>{

@@ -31,7 +31,7 @@ const UserWidget = ({userId, picturePath}) => {
 
     const sendRequest = async () => {
         const response = await fetch(
-            `http://localhost:3001/users/sendRequest/${loggedUser._id}/${userId}`,
+            `https://social-media-backend-2-dzbo.onrender.com/users/sendRequest/${loggedUser._id}/${userId}`,
             {
                 method: "GET",
                 headers: {
@@ -43,7 +43,7 @@ const UserWidget = ({userId, picturePath}) => {
     }
     const getFriends = async () => {
         const response = await fetch(
-            `http://localhost:3001/users/${loggedUser._id}/friends`,{
+            `https://social-media-backend-2-dzbo.onrender.com/users/${loggedUser._id}/friends`,{
                 method: "GET",
                 headers: {Authorization: `Bearer ${token}`}
             }
@@ -55,7 +55,7 @@ const UserWidget = ({userId, picturePath}) => {
     }
     const RemoveFriend = async () => {
         const response = await fetch(
-            `http://localhost:3001/users/removeFriend/${loggedUser._id}/${userId}`,
+            `https://social-media-backend-2-dzbo.onrender.com/users/removeFriend/${loggedUser._id}/${userId}`,
             {
                 method: "GET",
                 headers: {
@@ -71,7 +71,7 @@ const UserWidget = ({userId, picturePath}) => {
       }
     const getUser = async () => {
         const response = await fetch(
-            `http://localhost:3001/users/${userId}`,
+            `https://social-media-backend-2-dzbo.onrender.com/users/${userId}`,
             {
                 method: "GET",
                 headers: { Authorization: `Bearer ${token}`}

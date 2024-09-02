@@ -5,6 +5,8 @@ import { setFriends, setRequests } from "state";
 import FlexBetween from "./FlexBetween";
 import UserImage from "./UserImage";
 import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 
 const Request = ({ friendId, name, subtitle, userPicturePath }) => {
@@ -22,7 +24,7 @@ const Request = ({ friendId, name, subtitle, userPicturePath }) => {
 
     const acceptRequest = async () => {
         const response = await fetch(
-            `http://localhost:3001/users/acceptRequest/${_id}/${friendId}`,
+            `https://social-media-backend-2-dzbo.onrender.com/users/acceptRequest/${_id}/${friendId}`,
             {
                 method: "GET",
                 headers: {
@@ -35,11 +37,12 @@ const Request = ({ friendId, name, subtitle, userPicturePath }) => {
             const data = await response.json();
             dispatch(setFriends({ friends : data}));
             dispatch(setRequests({ requests : friend_requests.filter((request) => request._id !== friendId)}));
+            toast.success('Request accepted successfully!', {icon: '👏',autoClose: 1000,hideProgressBar: true,sx: {width:'200px',borderRadius: '10px',background:"#blue",color: '#ffffff',},});
         }
     }
     const cancelRequest = async () => {
         const response = await fetch(
-            `http://localhost:3001/users/cancelRequest/${_id}/${friendId}`,
+            `https://social-media-backend-2-dzbo.onrender.com/users/cancelRequest/${_id}/${friendId}`,
             {
                 method: "GET",
                 headers: {
@@ -52,6 +55,7 @@ const Request = ({ friendId, name, subtitle, userPicturePath }) => {
             const data = await response.json();
             //dispatch(setFriends({ friends : data}));
             dispatch(setRequests({ requests : friend_requests.filter((request) => request._id !== friendId)}));
+            toast.success('Request cancelled successfully!', {icon: '👏',autoClose: 1000,hideProgressBar: true,sx: {width:'200px',borderRadius: '10px',background:"#blue",color: '#ffffff',},});
         }
     }
 

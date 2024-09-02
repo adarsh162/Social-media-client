@@ -93,7 +93,9 @@ const Navbar = ({setIsSearch, setSearch}) => {
               <LightMode sx={{ color: dark, fontSize: "25px" }} />
             )}
           </IconButton>
+          <IconButton onClick={() => navigate("/chat")}>
           <Message sx={{ fontSize: "25px" }} />
+          </IconButton>
           <IconButton onClick={() => navigate("/notification")} sx={{ fontSize: "25px" }}>
 
             <Badge badgeContent={user.friend_requests.length} color="error">
@@ -162,7 +164,7 @@ const Navbar = ({setIsSearch, setSearch}) => {
           </IconButton>
           <Message sx={{ fontSize: "25px" }} />
           <IconButton onClick={() => navigate("/notification")} sx={{ fontSize: "25px" }}>
-            <Badge badgeContent={4} color="primary">
+          <Badge badgeContent={user.friend_requests.length} color="error">
             <Notifications sx={{ fontSize: "25px" }} />
             </Badge>
           </IconButton>
